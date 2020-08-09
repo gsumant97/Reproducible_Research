@@ -5,7 +5,7 @@ date: "09/08/2020"
 output: html_document
 ---
 
-##Assignment Instructions
+**Assignment Instructions: **
 1. Code for reading in the dataset and/or processing the data 
 2. Histogram of the total number of steps taken eachd ay
 3. Mean and median number of steps taken each day
@@ -16,8 +16,8 @@ output: html_document
 8.Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 9.All of the R code needed to reproduce the results (numbers, plots, etc.) in the report.
 
-##Step 1 
-##Code for reading in the dataset and/or processing the data 
+**Step 1: **
+ Code for reading in the dataset and/or processing the data 
 ```{r}
 setwd("C:/Users/91739/Downloads/RProg_Practice/Coursera/Reproducible_Research")
 activity <- read.csv("activity.csv")
@@ -37,8 +37,8 @@ activity$date <- ymd(activity$date)
 length(unique(activity$date))
 ```
 
-##Step 2
-##Histogram of the total number of steps taken each dat
+**Step 2: **
+ Histogram of the total number of steps taken each dat
 ```{r, echo=TRUE}
 library(ggplot2)
 Q2 <- data.frame(tapply(activity$steps, activity$date, sum, na.rm=TRUE))
@@ -56,8 +56,8 @@ png("plot1.1.png")
 qplot(Q2$`Total Steps`, geom = "histogram", xlab = "Total Steps", ylab = "Counts", main = "Total StepsHistogram")
 dev.off()
 ```
-##Step 3
-##Mean and Median number if the steps taken each day
+**Step 3: **
+ Mean and Median number if the steps taken each day
 
 ```{r, echo = TRUE}
 library(dplyr)
@@ -71,8 +71,8 @@ Q3$median<-temp$`Median Steps`
 Q3<-Q3 %>% select(date,`Mean Steps`,median)
 ```
 
-##Step 4
-#Time Series plot of the average number of steps taken
+**Step 4: **
+ Time Series plot of the average number of steps taken
 ```{r, echo=TRUE}
 Q4 <- Q3
 Q4$date <- as.Date(Q4$date, format="%Y-%m-%d")
@@ -82,8 +82,8 @@ ggplot(Q4, aes(x=Q4$date, y=Q4$`Mean Steps`))+geom_bar(stat = "identity")+scale_
 dev.off()
 ```
 
-##Step 5
-##The 5-Minute interval that, on average, contain the maximum number of steps
+**Step 5: **
+The 5-Minute interval that, on average, contain the maximum number of steps
 
 ```{r, echo=TRUE}
 #this is assuming that the words on average means averaging steps by date and interval
@@ -93,7 +93,7 @@ Q5 <- aggregate(data=activity, steps~date+interval, FUN = "mean")
 Q5 <- aggregate(data=Q5, steps~interval, FUN = "max")
 ```
 
-##Step 6 
+**Step 6: ** 
 Code to describe and show a strategy for imputing missing data
 There are multiple strategies to deal with multiple value imputations.
 The common strategies include:
@@ -149,7 +149,7 @@ Q6.6 <-Q6.6  %>% select(date,weekday,interval,Steps.Updated)
 names(Q6.6)[[4]]<-"Steps"
 ```
 
-##Step 7
+**Step 7: **
 Histogram of the total numbers of steps taken each day after missing values are imputed
 
 ```{r, echo=TRUE}
@@ -161,7 +161,7 @@ qplot(Q6.6$Steps, geom = "histogram", main = "Total Step taken histogram post im
 ```
 
 
-## Step 8
+**Step 8: **
 Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 
 ```{r, echo = TRUE}
@@ -188,12 +188,5 @@ png("plot8.2.png")
 hexbinplot(data=Q8.1,Steps~interval|WDWE, aspect = 1, bins=50)
 dev.off()
 ```
-
-
-
-
-
-
-
 
 
